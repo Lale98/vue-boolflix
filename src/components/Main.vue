@@ -1,9 +1,14 @@
 <template>
   <div id="main">
-      <SearchBar @search="search"/>
-      <div class="cards-container">
-        <Card :film="film" v-for="film,index in films" :key='index' />
-      </div>
+    <SearchBar @search="search"/>
+    <h2>Film</h2>
+    <div class="film-container">
+        <Card :film="film" v-for="film,index in films" :key='index' :class="{hidden : film.media_type != 'movie'}" />
+    </div>
+    <h2>Serie TV</h2>
+    <div class="tv-container">
+        <Card :film="film" v-for="film,index in films" :key='index' :class="{hidden : film.media_type != 'tv'}" />
+    </div>
   </div>
 </template>
 
@@ -24,7 +29,7 @@ export default {
             api : {
                 apiUrlSearchBase: `https://api.themoviedb.org/3/`,
                 api_key: 'api_key=eac04007b3b3652d355621a9c159dfd2',
-                action: 'search/movie?',
+                action: 'search/multi?',
                 query: ''
             }
         }
@@ -33,7 +38,7 @@ export default {
         search : function (inputText) {
             this.api.query = inputText;
             axios
-            .get(`${this.api.apiUrlSearchBase}${this.api.action}${this.api.api_key}&query=${this.api.query} `)
+            .get(`${this.api.apiUrlSearchBase}${this.api.action}${this.api.api_key}&query=${this.api.query}`)
             .then(
                 (element) => {
                     this.query = inputText;
@@ -55,8 +60,15 @@ export default {
         width: calc((100% - 120px) / 6);
         background-color: blue;
     }
-    .cards-container {
+    .tv-container,
+    .film-container {
         display: flex;
         flex-wrap: wrap;
+    }
+    .hidden {
+        display: none;
+    }
+    h2 {
+        font-size: 30px;
     }
 </style>
