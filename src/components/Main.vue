@@ -20,19 +20,26 @@ export default {
         },
     data: function () {
         return{
-        films : [],
-        apiUrlSearchBase: `https://api.themoviedb.org/3/search/movie?api_key=eac04007b3b3652d355621a9c159dfd2&query=`,
-
+            films : [],
+            api : {
+                apiUrlSearchBase: `https://api.themoviedb.org/3/`,
+                api_key: 'api_key=eac04007b3b3652d355621a9c159dfd2',
+                action: 'search/movie?',
+                query: ''
+            }
         }
     },
     methods: {
         search : function (film) {
+                    // film.replace(/\s/g, "%20")
+            this.api.query = film;
             axios
-            .get(this.apiUrlSearchBase + film.replace(/\s/g, "%20"))
+            .get(`${this.api.apiUrlSearchBase}${this.api.action}${this.api.api_key}&query=${this.api.query} `)
             .then(
                 (element) => {
-                this.films = element.data.results;
-                console.log(this.films);
+                    this.query = film;
+                    this.films = element.data.results;
+                    console.log(this.films);
                 }
             )
         }
