@@ -30,14 +30,13 @@ export default {
         }
     },
     methods: {
-        search : function (film) {
-                    // film.replace(/\s/g, "%20")
-            this.api.query = film;
+        search : function (inputText) {
+            this.api.query = inputText;
             axios
             .get(`${this.api.apiUrlSearchBase}${this.api.action}${this.api.api_key}&query=${this.api.query} `)
             .then(
                 (element) => {
-                    this.query = film;
+                    this.query = inputText;
                     this.films = element.data.results;
                     console.log(this.films);
                 }
