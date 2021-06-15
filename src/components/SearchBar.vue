@@ -1,7 +1,7 @@
 <template>
   <div>
-      <input type="text" v-model="inputText" @keyup.enter="$emit('search', inputText)">
-      <button @click="$emit('search', inputText)">Cerca</button>
+      <input type="text" v-model="inputText" @keyup.enter="$emit('searchFilm', inputText),$emit('searchTv', inputText)">
+      <button @click="$emit('searchFilm', inputText),$emit('searchTv', inputText)">Cerca</button>
   </div>
 </template>
 
@@ -22,5 +22,6 @@ export default {
     justify-content: center;
     align-items: center;
     height: 50px;
+    background-color: rgba(black, 0.8);
   }
 </style>

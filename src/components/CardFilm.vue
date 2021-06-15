@@ -1,0 +1,127 @@
+<template>
+    <div class="card">
+        <img class="poster" :src="this.imgUrl+film.poster_path" alt="">
+        <div class="back"></div>
+        <div class="info">
+            <h2> {{film.original_title}}</h2>
+            <h4>{{film.title}}</h4>
+            <div id="language">
+                <img class="flag" v-if="film.original_language == 'it'" src="../img/it.png" alt="it">
+                <img class="flag" v-else-if="film.original_language == 'en'" src="../img/en.png" alt="it">
+                <!-- <h4 v-else>Lingua Sconosciuta</h4> -->
+            </div>
+            <ul v-if="film.vote_average != '' ">
+                <li>
+                    {{star()}}
+                </li>
+                <li>
+                    <i class="fa-star" :class="{fas : vote >= 0 , far : vote == 0 }"></i>
+                </li>
+                <li>
+                    <i class="fa-star" :class="{fas : vote >= 4 , far: vote < 4 }"></i>
+                </li>
+                <li>
+                    <i class="fa-star" :class="{fas : vote >= 6, far: vote < 6 }"></i>
+                </li>
+                <li>
+                    <i class="fa-star" :class="{fas : vote >= 8 , far: vote < 8 }"></i>
+                </li>
+                <li>
+                    <i class="fa-star" :class="{fas : vote >= 9, far: vote < 9 }"></i>
+                </li>
+            </ul>
+            <p>{{this.film.overview}}</p>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    name: 'CardFilm',
+    data: function() {
+        return {
+            vote: ''
+        }
+    },
+    props: {
+        film : Object,
+        imgUrl : String
+    },
+    methods : {
+        star: function () {
+            const vote = Math.round(this.film.vote_average);
+            this.vote = vote;
+
+            console.log(this.vote);
+        }
+    }
+}
+</script>
+
+<style lang="scss">
+    .card {
+        position: relative;
+        text-align: center;
+        width: calc((100% - 140px) / 7);
+        height: 450px;
+        margin: 10px;
+        border: 1px solid black;
+        box-shadow: 0 0 10px 5px black;
+        .back,
+        .poster {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+
+        &:hover .info {
+            opacity: 0.9;
+        }
+        &:hover .back {
+            opacity: 0.6;
+        }
+
+        ul {
+            list-style: none;
+
+            li {
+                display: inline-block;
+                text-decoration: none;
+            }
+        }
+    }
+    .fa-star {
+        color: yellow;
+    }
+    .info{
+        opacity: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+        height: 400px;
+        color: white;
+
+        .example::-webkit-scrollbar {
+            display: none;
+        }
+
+        p {
+            max-height: 200px;
+            overflow: auto;
+        }
+    }
+    .back{
+        opacity: 0;
+        background-color: black;
+    }
+    .flag {
+        width: 40px;
+    }
+</style>
