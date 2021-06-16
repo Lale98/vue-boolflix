@@ -1,6 +1,6 @@
 <template>
   <div>
-      <input type="text" v-model="inputText" @keyup.enter="$emit('searchFilm', inputText),$emit('searchTv', inputText)">
+      <input type="text" v-model="inputText" @keyup="$emit('searchFilm', inputText),$emit('searchTv', inputText)">
       <button @click="$emit('searchFilm', inputText),$emit('searchTv', inputText)">Cerca</button>
   </div>
 </template>
