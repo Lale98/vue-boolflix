@@ -1,15 +1,22 @@
 <template>
-  <div id="main">
-    <SearchBar @searchFilm="searchFilm" @searchTv="searchTv" />
-    <h2 :class="{hidden: this.films.length == 0}">Film</h2>
-    <div class="film-container">
-        <CardFilm :film="film" :imgUrl='imgUrl' v-for="film,index in films" :key='index' />
+    <div>
+        <header>
+            <a href="#">
+                <img src="https://fontmeme.com/permalink/210616/4bda3b3e90fc32fe9640062b3a8c41db.png" alt="netflix-font" border="0">
+            </a>
+            <SearchBar @searchFilm="searchFilm" @searchTv="searchTv" />
+        </header>
+        <div id="main">
+            <h2 :class="{hidden: this.films.length == 0}">Film</h2>
+            <div class="film-container">
+                <CardFilm :film="film" :imgUrl='imgUrl' v-for="film,index in films" :key='index' />
+            </div>
+            <h2 :class="{hidden: this.tvs.length == 0}">Serie TV</h2>
+            <div class="tv-container">
+                <CardTv :tv="tv" :imgUrl='imgUrl' v-for="tv,index in tvs" :key='index' />
+            </div>
+        </div>
     </div>
-    <h2 :class="{hidden: this.tvs.length == 0}">Serie TV</h2>
-    <div class="tv-container">
-        <CardTv :tv="tv" :imgUrl='imgUrl' v-for="tv,index in tvs" :key='index' />
-    </div>
-  </div>
 </template>
 
 <script>
@@ -82,9 +89,29 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../style/style.scss';
+    header {
+        padding: 0 25px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 80px;
+        background-color: $secondaryColor;
+
+        a {
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        img {
+            height: 70%;
+        }
+    }
     #main {
-        height: 100vh;
-        background-color: rgba(black, 0.7);
+        padding: 25px;
+        height: calc(100vh - 80px);
+        background-color: $mainColor;
         overflow: auto;
     }
     .hidden {

@@ -7,7 +7,7 @@
             <div id="language">
                 <img class="flag" v-if="tv.original_language == 'it'" src="../img/it.png" alt="it">
                 <img class="flag" v-else-if="tv.original_language == 'en'" src="../img/en.png" alt="it">
-                <h4 v-else>Lingua Sconosciuta</h4>
+                <h4 v-else>{{film.original_language}}</h4>
             </div>
             <ul v-if="tv.vote_average != '' ">
                 <li>

@@ -4,11 +4,11 @@
         <div class="back"></div>
         <div class="info">
             <h2> {{film.original_title}}</h2>
-            <h4>{{film.title}}</h4>
+            <h4 v-if="film.original_title != film.title">{{film.title}}</h4>
             <div id="language">
                 <img class="flag" v-if="film.original_language == 'it'" src="../img/it.png" alt="it">
                 <img class="flag" v-else-if="film.original_language == 'en'" src="../img/en.png" alt="it">
-                <!-- <h4 v-else>Lingua Sconosciuta</h4> -->
+                <h4 v-else>{{film.original_language}}</h4>
             </div>
             <ul v-if="film.vote_average != '' ">
                 <li>
@@ -62,7 +62,7 @@ export default {
     .card {
         position: relative;
         text-align: center;
-        width: calc((100% - 140px) / 7);
+        width: calc((100% - 120px) / 6);
         height: 450px;
         margin: 10px;
         border: 1px solid black;
@@ -83,7 +83,7 @@ export default {
             opacity: 0.9;
         }
         &:hover .back {
-            opacity: 0.6;
+            opacity: 0.8;
         }
 
         ul {
@@ -104,9 +104,15 @@ export default {
         flex-direction: column;
         align-items: center;
         justify-content: space-between;
-        padding: 10px;
+        padding-top: 20%;
+        padding-left: 15px;
+        padding-right: 15px;
         height: 400px;
         color: white;
+
+        h2 {
+            font-size: 35px;
+        }
 
         .example::-webkit-scrollbar {
             display: none;

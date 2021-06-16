@@ -17,11 +17,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @import '../style/style.scss';
   div {
+    height: 100%;
     display: flex;
-    justify-content: center;
     align-items: center;
-    height: 50px;
-    background-color: rgba(black, 0.8);
   }
+  input {
+    background-color: transparent;
+    border: 1px solid rgba(white, 0.2);
+    height: 40%;
+    width: 300px;
+    color: white;
+    padding: 0 10px;
+  }
+  button {
+    background-color: transparent;
+    border: 1px solid rgba(white, 0.2);
+    height: 40%;
+    color: white;
+    padding: 0 10px;
+  }
+  
 </style>
