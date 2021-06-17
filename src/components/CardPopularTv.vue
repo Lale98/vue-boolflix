@@ -1,20 +1,20 @@
 <template>
     <div class="item">
-        <img v-if="popular.backdrop_path != null" class="poster" :src="this.imgUrl+popular.backdrop_path" alt="">
+        <img v-if="popularTv.backdrop_path != null" class="poster" :src="this.imgUrl+popularTv.backdrop_path" alt="">
         <img v-else class="poster" src="../img/noImage.png" alt="">
         <div class="back"></div>
         <div class="details">
             <div class="title">
-                <h2> {{popular.title}}</h2>
+                <h2> {{popularTv.name}}</h2>
             </div>
             <div class="overview">
                 <div class="vote">
                     <div id="language">
-                        <img class="flag" v-if="popular.original_language == 'it'" src="../img/it.png" alt="it">
-                        <img class="flag" v-else-if="popular.original_language == 'en'" src="../img/en.png" alt="it">
-                        <h4 v-else>{{popular.original_language}}</h4>
+                        <img class="flag" v-if="popularTv.original_language == 'it'" src="../img/it.png" alt="it">
+                        <img class="flag" v-else-if="popularTv.original_language == 'en'" src="../img/en.png" alt="it">
+                        <h4 v-else>{{popularTv.original_language}}</h4>
                     </div>
-                    <ul v-if="popular.vote_average != '' ">
+                    <ul v-if="popularTv.vote_average != '' ">
                         <li>
                             {{star()}}
                         </li>
@@ -35,7 +35,7 @@
                         </li>
                     </ul>
                 </div>
-                <p>{{this.popular.overview}}</p>
+                <p>{{this.popularTv.overview}}</p>
             </div>
         </div>
     </div>
@@ -43,9 +43,9 @@
 
 <script>
 export default {
-    name: 'CardPopular',
+    name: 'CardPopularTv',
     props : {
-        popular : Object
+        popularTv : Object
     },
     data : function () {
         return {
@@ -56,7 +56,7 @@ export default {
     },
     methods : {
         star: function () {
-            const vote = Math.round(this.popular.vote_average);
+            const vote = Math.round(this.popularTv.vote_average);
             this.vote = vote;
 
             console.log(this.vote);

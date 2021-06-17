@@ -10,13 +10,13 @@
                         <h4 @click="homeFilm">Film</h4>
                     </li>
                     <li>
-                        <h4>Serie TV</h4>
+                        <h4 @click="homeTv">Serie TV</h4>
                     </li>
                 </ul>
             </div>
             <SearchBar @searchFilm="searchFilm" @searchTv="searchTv" />
         </header>
-        <div id="main-search" v-if="this.searching == true">
+        <div id="main-search" v-if="this.searching == true && this.onlyFilm == false && this.onlyTv == false">
             <h2 :class="{hidden: this.films.length == 0}">Film</h2>
             <div class="film-container">
                 <CardFilm :film="film" :imgUrl='imgUrl' v-for="film,index in films" :key='index' />
@@ -26,10 +26,16 @@
                 <CardTv :tv="tv" :imgUrl='imgUrl' v-for="tv,index in tvs" :key='index' />
             </div>
         </div>
-        <div id="main-popular" v-else-if="this.searching == false">
-            <h2>Popolari</h2>
+        <div id="main-popular" v-else-if="this.searching == false && this.onlyFilm == false && this.onlyTv == false">
+            <h2>Film Popolari</h2>
             <div class="popular-container">
                 <CardPopular :popular="popular" v-for="popular,index in populars" :key="index" />
+            </div>
+        </div>
+        <div id="main-popular-tv" v-else-if="this.searching == false && this.onlyFilm == false && this.onlyTv == true">
+            <h2>Serie TV Popolari</h2>
+            <div class="popular-tv-container">
+                <CardPopularTv :popularTv="popularTv" v-for="popularTv,index in popularTvs" :key="index" />
             </div>
         </div>
     </div>
@@ -41,6 +47,7 @@ import axios from 'axios';
 import CardFilm from './CardFilm.vue';
 import CardTv from './CardTv.vue';
 import CardPopular from './CardPopular.vue';
+import CardPopularTv from './CardPopularTv.vue';
 
 
 export default {
@@ -49,17 +56,22 @@ export default {
         SearchBar,
         CardFilm,
         CardTv,
-        CardPopular
+        CardPopular,
+        CardPopularTv
         },
     data: function () {
         return{
+            onlyTv : false,
+            onlyFilm : false,
             searching : false,
+            popularTvs: [],
             populars : [],
             films : [],
             tvs: [],
             videoFilms : [],
             apiFilmVideo: 'https://api.themoviedb.org/3/movie/',
             apiPopular: 'https://api.themoviedb.org/3/movie/popular',
+            apiPopularTv: 'https://api.themoviedb.org/3/tv/popular',
             imgUrl: 'https://image.tmdb.org/t/p/w342',
             apiFilm: `https://api.themoviedb.org/3/search/movie`,
             apiTv: 'https://api.themoviedb.org/3/search/tv',
@@ -71,13 +83,27 @@ export default {
         axios
             .get(this.apiPopular, {
                 params : {
-                    api_key: this.api_key
+                    api_key: this.api_key,
+                    language : 'it-IT'
                 }
             })
             .then(
                 (element) => {
                     this.populars = element.data.results;
                     console.log(this.populars);
+                }
+            )
+        axios
+            .get(this.apiPopularTv, {
+                params : {
+                    api_key: this.api_key,
+                    language : 'it-IT'
+                }
+            })
+            .then(
+                (element) => {
+                    this.popularTvs = element.data.results;
+                    console.log(this.popularTvs);
                 }
             )
     },
@@ -87,6 +113,8 @@ export default {
 
             this.query = inputText;
             this.searching = true;
+            this.onlyTv = false;
+            this.onlyFilm = false;
             
             axios
                 .get(this.apiFilm, {
@@ -124,6 +152,12 @@ export default {
         },    
         homeFilm : function () {
             this.searching = false;
+            this.onlyTv = false;
+
+        },
+        homeTv : function () {
+            this.searching = false;
+            this.onlyTv = true;
         }
     }
 
@@ -150,9 +184,11 @@ export default {
             height: 70%;
         }
     }
+    #main-popular-tv h2,
     #main-popular h2 {
         margin-top: 0;
     }
+    #main-popular-tv,
     #main-popular {
         padding: 0 25px;
         height: calc(100vh - 80px);
@@ -174,6 +210,7 @@ export default {
     .hidden {
         display: none;
     }
+    .popular-tv-container,
     .popular-container,
     .tv-container,
     .film-container {

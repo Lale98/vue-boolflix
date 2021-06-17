@@ -1,6 +1,7 @@
 <template>
     <div class="card">
-        <img class="poster" :src="this.imgUrl+film.poster_path" alt="">
+        <img v-if="film.poster_path != null" class="poster" :src="this.imgUrl+film.poster_path" alt="">
+        <img v-else class="poster" src="../img/noImage.png" alt="">
         <div class="back"></div>
         <div class="info">
             <h2> {{film.original_title}}</h2>
@@ -67,6 +68,7 @@ export default {
         margin: 10px;
         border: 1px solid black;
         box-shadow: 0 0 10px 5px black;
+        cursor: pointer;
         .back,
         .poster {
             width: 100%;

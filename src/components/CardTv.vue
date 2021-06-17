@@ -1,13 +1,14 @@
 <template>
     <div class="card">
-        <img class="poster" :src="this.imgUrl+tv.poster_path" alt="">
+        <img v-if="tv.poster_path != null" class="poster" :src="this.imgUrl+tv.poster_path" alt="">
+        <img v-else class="poster" src="../img/noImage.png" alt="">
         <div class="back"></div>
         <div class="info">
             <h2> {{tv.name}}</h2>
             <div id="language">
                 <img class="flag" v-if="tv.original_language == 'it'" src="../img/it.png" alt="it">
                 <img class="flag" v-else-if="tv.original_language == 'en'" src="../img/en.png" alt="it">
-                <h4 v-else>{{film.original_language}}</h4>
+                <h4 v-else>{{tv.original_language}}</h4>
             </div>
             <ul v-if="tv.vote_average != '' ">
                 <li>

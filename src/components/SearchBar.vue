@@ -37,6 +37,11 @@ export default {
     height: 40%;
     color: white;
     padding: 0 10px;
+    cursor: pointer;
+
+    &:hover {
+      border: 1px solid white;
+    }
   }
   
 </style>
